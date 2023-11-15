@@ -7,6 +7,11 @@ driver = webdriver.Firefox(executable_path=r'/home/karasik/git/test/geckodriver'
 driver.get('https://sbis.ru')
 driver.find_element(By.LINK_TEXT, "Контакты").click()
 
+# Нужно сделать так, чтобы, если появлялось, то сразу нажимать 
+# banner_element1 = WebDriverWait(driver,10).until(
+#     EC.visibility_of_element_located((By.CLASS_NAME, "sbis_ru-CookieAgreement__close"))
+# )
+# banner_element1.click()
 
 # вспылающее о куки
 banner_element = WebDriverWait(driver,10).until(
@@ -60,7 +65,7 @@ png_elements = parent_block.find_elements(By.XPATH, ".//img")
 # width_1 = first_elements.get_attribute('width')
 # height_1 = first_elements.get_attribute('height')
 
-# говнокод, надо бы исправить, но работает
+# плохой код, надо бы исправить, но работает
 # first_image = parent_block.find_element(By.TAG_NAME, 'img')
 # width_1 = first_image.get_attribute('width')
 # height_1 = first_image.get_attribute('height')
@@ -75,6 +80,7 @@ png_elements = parent_block.find_elements(By.XPATH, ".//img")
 #         print('Изображение № {} - отличается по размеру'.format(i))
 
 # вариант получше
+all_elements_equal = True
 for i in range(len(png_elements)):
     for j in range(i + 1, len(png_elements)):
         width_i = png_elements[i].get_attribute('width')
@@ -84,12 +90,15 @@ for i in range(len(png_elements)):
         height_j = png_elements[j].get_attribute('height')
 
         if width_i == width_j and height_i == height_j:
-            None # либо написать условие, что совпадает размер
+             None 
+             a = 'ok'
         else:
+            all_elements_equal = False
             print(f"Размеры для элементов {i} и {j} различаются.")
-    
+if all_elements_equal:
+    print ('Размеры всех изображений совпадают')
 
 
 # driver.refresh()
-# driver.quit()
+driver.quit()
 
