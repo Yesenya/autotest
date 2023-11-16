@@ -8,7 +8,6 @@ from selenium.webdriver.firefox.service import Service
 import http.client
 import requests
 
-
 @pytest.fixture
 def browser():
     driver = webdriver.Firefox(service=Service(r'/home/karasik/git/test/geckodriver'))
@@ -24,14 +23,8 @@ def test_two(browser):
     el = browser.find_element(By.CLASS_NAME, "sbis_ru-Region-Chooser")
     assert el, ("Регион не отображается")
     txt_cnt = el.text 
-    # with open ("result.txt") as f:
-    #     f_cnt = f.read(user_region)
     reg = region_by_ip() 
-  
-
     print ("Сравни регионы: - {}, согласно сайту: {}".format(reg, txt_cnt))
-    
-    # print(f"Сравни регионы: действительный - {}, на сайте - {}")
 
     assert browser.find_element(By.CSS_SELECTOR, "div.controls-Tree__item:nth-child(2)"),("Партнеры не отображаются")
 
@@ -50,8 +43,6 @@ def close_pop_up_m(driver):
         EC.visibility_of_element_located((By.CLASS_NAME, "sbis_ru-CookieAgreement__close"))
     )
     banner_element.click()
-
-
 
 def region_by_ip():
     conn = http.client.HTTPConnection("ifconfig.me")
